@@ -1,12 +1,11 @@
 # miniKube
 
-**install docker**
-
-**start docker as  a service**
-**install kubectl**
-**install minikube**
-**start minikube**
-**minikube start**
+1.**install docker**</br>
+>.__start docker as  a service__</br>
+2.**install kubectl**</br>
+3.**install minikube**</br>
+>__start minikube__</br>
+4.**minikube start**</br>
 😄  minikube v1.22.0 on Centos 7.6.1810
 ✨  Automatically selected the docker driver. Other choices: none, ssh
 💨  For improved Docker performance, Upgrade Docker to a newer version (Minimum recommended version is 18.09.0)
