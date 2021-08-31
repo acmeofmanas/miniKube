@@ -1,10 +1,10 @@
 # miniKube
 
 1.**install docker**</br>
->.__start docker as  a service__</br>
+_start docker as  a service_</br>
 2.**install kubectl**</br>
 3.**install minikube**</br>
->__start minikube__</br>
+_start minikube__</br>
 4.**minikube start**</br>
 ```
 😄  minikube v1.22.0 on Centos 7.6.1810
