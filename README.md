@@ -6,6 +6,7 @@
 3.**install minikube**</br>
 >__start minikube__</br>
 4.**minikube start**</br>
+```
 😄  minikube v1.22.0 on Centos 7.6.1810
 ✨  Automatically selected the docker driver. Other choices: none, ssh
 💨  For improved Docker performance, Upgrade Docker to a newer version (Minimum recommended version is 18.09.0)
@@ -23,3 +24,4 @@
     ▪ Using image gcr.io/k8s-minikube/storage-provisioner:v5
 🌟  Enabled addons: storage-provisioner, default-storageclass
 🏄  Done! kubectl is now configured to use "minikube" cluster and "default" namespace by default
+```
