@@ -1,0 +1,201 @@
+[kogentix_ops@cdhdn25 ~]$ git clone --depth=1 https://github.com/pingcap/tidb-operator
+Cloning into 'tidb-operator'...
+remote: Enumerating objects: 1405, done.
+remote: Counting objects: 100% (1405/1405), done.
+remote: Compressing objects: 100% (1187/1187), done.
+remote: Total 1405 (delta 347), reused 609 (delta 124), pack-reused 0
+Receiving objects: 100% (1405/1405), 1.68 MiB | 0 bytes/s, done.
+Resolving deltas: 100% (347/347), done.
+[kogentix_ops@cdhdn25 ~]$ cd tidb-operator/
+
+[kogentix_ops@cdhdn25 tidb-operator]$ kubectl apply -f ./manifests/crd.yaml
+Warning: apiextensions.k8s.io/v1beta1 CustomResourceDefinition is deprecated in v1.16+, unavailable in v1.22+; use apiextensions.k8s.io/v1 CustomResourceDefinition
+customresourcedefinition.apiextensions.k8s.io/tidbclusters.pingcap.com created
+customresourcedefinition.apiextensions.k8s.io/dmclusters.pingcap.com created
+customresourcedefinition.apiextensions.k8s.io/backups.pingcap.com created
+customresourcedefinition.apiextensions.k8s.io/restores.pingcap.com created
+customresourcedefinition.apiextensions.k8s.io/backupschedules.pingcap.com created
+customresourcedefinition.apiextensions.k8s.io/tidbmonitors.pingcap.com created
+customresourcedefinition.apiextensions.k8s.io/tidbinitializers.pingcap.com created
+customresourcedefinition.apiextensions.k8s.io/tidbclusterautoscalers.pingcap.com created
+
+[kogentix_ops@cdhdn25 tidb-operator]$ kubectl delete -f ./manifests/crd.yaml
+Warning: apiextensions.k8s.io/v1beta1 CustomResourceDefinition is deprecated in v1.16+, unavailable in v1.22+; use apiextensions.k8s.io/v1 CustomResourceDefinition
+customresourcedefinition.apiextensions.k8s.io "tidbclusters.pingcap.com" deleted
+customresourcedefinition.apiextensions.k8s.io "dmclusters.pingcap.com" deleted
+customresourcedefinition.apiextensions.k8s.io "backups.pingcap.com" deleted
+customresourcedefinition.apiextensions.k8s.io "restores.pingcap.com" deleted
+customresourcedefinition.apiextensions.k8s.io "backupschedules.pingcap.com" deleted
+customresourcedefinition.apiextensions.k8s.io "tidbmonitors.pingcap.com" deleted
+customresourcedefinition.apiextensions.k8s.io "tidbinitializers.pingcap.com" deleted
+customresourcedefinition.apiextensions.k8s.io "tidbclusterautoscalers.pingcap.com" deleted
+
+[kogentix_ops@cdhdn25 tidb-operator]$ kubectl get crd
+No resources found
+
+[kogentix_ops@cdhdn25 tidb-operator]$ helm install pingcap/tidb-operator --name tidb-operator --namespace tidb-admin --version=v1.2.2
+NAME:   tidb-operator
+LAST DEPLOYED: Fri Sep  3 08:01:02 2021
+NAMESPACE: tidb-admin
+STATUS: DEPLOYED
+
+RESOURCES:
+==> v1/ClusterRole
+NAME                                   CREATED AT
+tidb-operator:tidb-controller-manager  2021-09-03T13:01:06Z
+tidb-operator:tidb-scheduler           2021-09-03T13:01:06Z
+
+==> v1/ClusterRoleBinding
+NAME                                   ROLE                                               AGE
+tidb-operator:kube-scheduler           ClusterRole/system:kube-scheduler                  0s
+tidb-operator:tidb-controller-manager  ClusterRole/tidb-operator:tidb-controller-manager  0s
+tidb-operator:tidb-scheduler           ClusterRole/tidb-operator:tidb-scheduler           0s
+tidb-operator:volume-scheduler         ClusterRole/system:volume-scheduler                0s
+
+==> v1/ConfigMap
+NAME                   DATA  AGE
+tidb-scheduler-policy  1     1s
+
+==> v1/Deployment
+NAME                     READY  UP-TO-DATE  AVAILABLE  AGE
+tidb-controller-manager  0/1    1           0          0s
+tidb-scheduler           0/1    1           0          0s
+
+==> v1/Pod(related)
+NAME                                      READY  STATUS             RESTARTS  AGE
+tidb-controller-manager-796b4cc89f-2c6vm  0/1    ContainerCreating  0         0s
+tidb-scheduler-7fd6976f95-p6d7v           0/2    ContainerCreating  0         0s
+
+==> v1/ServiceAccount
+NAME                     SECRETS  AGE
+tidb-controller-manager  1        0s
+tidb-scheduler           1        0s
+
+
+NOTES:
+Make sure tidb-operator components are running:
+
+    kubectl get pods --namespace tidb-admin -l app.kubernetes.io/instance=tidb-operator
+
+[kogentix_ops@cdhdn25 tidb-operator]$
+
+[kogentix_ops@cdhdn25 tidb-operator]$  kubectl get pods --namespace tidb-admin -l app.kubernetes.io/instance=tidb-operator
+
+NAME                                       READY   STATUS    RESTARTS   AGE
+tidb-controller-manager-796b4cc89f-2c6vm   1/1     Running   0          5m
+tidb-scheduler-7fd6976f95-p6d7v            2/2     Running   0          5m
+[kogentix_ops@cdhdn25 tidb-operator]$
+[kogentix_ops@cdhdn25 tidb-operator]$ kubectl get pods --namespace tidb-admin -o wide --watch
+NAME                                       READY   STATUS    RESTARTS   AGE     IP           NODE       NOMINATED NODE   READINESS GATES
+tidb-controller-manager-796b4cc89f-2c6vm   1/1     Running   0          5m26s   172.17.0.4   minikube   <none>           <none>
+tidb-scheduler-7fd6976f95-p6d7v            2/2     Running   0          5m26s   172.17.0.5   minikube   <none>           <none>
+
+[kogentix_ops@cdhdn25 tidb-operator]$ helm install pingcap/tidb-cluster --name demo --set \
+>   schedulerName=default-scheduler,pd.storageClassName=standard,tikv.storageClassName=standard,pd.replicas=1,tikv.replicas=1,tidb.replicas=1 --version=v1.2.2
+NAME:   demo
+LAST DEPLOYED: Fri Sep  3 08:08:05 2021
+NAMESPACE: default
+STATUS: DEPLOYED
+
+RESOURCES:
+==> v1/ConfigMap
+NAME                DATA  AGE
+demo-monitor        2     1s
+demo-pd-cfa0d77a    2     1s
+demo-tidb           2     1s
+demo-tidb-866b9771  2     1s
+demo-tikv-1c8d5543  2     1s
+
+==> v1/Deployment
+NAME            READY  UP-TO-DATE  AVAILABLE  AGE
+demo-discovery  0/1    1           0          1s
+demo-monitor    0/1    1           0          1s
+
+==> v1/Pod(related)
+NAME                             READY  STATUS       RESTARTS  AGE
+demo-discovery-7b6c5579b8-2v2hn  0/1    Terminating  0         2s
+demo-monitor-7c79dd9d67-nsq4f    0/3    Init:0/1     0         2s
+
+==> v1/Role
+NAME            CREATED AT
+demo-discovery  2021-09-03T13:08:05Z
+demo-monitor    2021-09-03T13:08:05Z
+
+==> v1/RoleBinding
+NAME            ROLE                 AGE
+demo-discovery  Role/demo-discovery  1s
+demo-monitor    Role/demo-monitor    1s
+
+==> v1/Secret
+NAME          TYPE    DATA  AGE
+demo-monitor  Opaque  2     1s
+
+==> v1/Service
+NAME                   TYPE       CLUSTER-IP      EXTERNAL-IP  PORT(S)                         AGE
+demo-discovery         ClusterIP  10.96.92.130    <none>       10261/TCP                       1s
+demo-grafana           NodePort   10.107.59.214   <none>       3000:31383/TCP                  1s
+demo-monitor-reloader  NodePort   10.105.223.205  <none>       9089:31202/TCP                  1s
+demo-prometheus        NodePort   10.102.175.175  <none>       9090:30010/TCP                  1s
+demo-tidb              NodePort   10.100.8.63     <none>       4000:30105/TCP,10080:32117/TCP  1s
+
+==> v1/ServiceAccount
+NAME            SECRETS  AGE
+demo-discovery  1        1s
+demo-monitor    1        1s
+
+==> v1alpha1/TidbCluster
+NAME  READY  PD  STORAGE  READY  DESIRE  TIKV  STORAGE  READY  DESIRE  TIDB  READY  DESIRE  AGE
+demo  1Gi    1   10Gi     1      1       1s
+
+
+NOTES:
+Cluster Startup
+1. Watch tidb-cluster up and running
+     watch kubectl get pods --namespace default -l app.kubernetes.io/instance=demo -o wide
+2. List services in the tidb-cluster
+     kubectl get services --namespace default -l app.kubernetes.io/instance=demo
+
+Cluster access
+* Access tidb-cluster using the MySQL client
+    kubectl port-forward -n default svc/demo-tidb 4000:4000 &
+    mysql -h 127.0.0.1 -P 4000 -u root -D test
+  Set a password for your user
+    SET PASSWORD FOR 'root'@'%' = 'UIXf9751G2'; FLUSH PRIVILEGES;
+* View monitor dashboard for TiDB cluster
+   kubectl port-forward -n default svc/demo-grafana 3000:3000
+   Open browser at http://localhost:3000. The default username and password is admin/admin.
+   If you are running this from a remote machine, you must specify the server's external IP address.
+[kogentix_ops@cdhdn25 tidb-operator]$
+
+
+[kogentix_ops@cdhdn25 tidb-operator]$ kubectl get pods --namespace default -l app.kubernetes.io/instance=demo -o wide --watch
+NAME                              READY   STATUS    RESTARTS   AGE   IP            NODE       NOMINATED NODE   READINESS GATES
+demo-discovery-778c4d87f8-sxblm   1/1     Running   0          90s   172.17.0.10   minikube   <none>           <none>
+demo-monitor-7c79dd9d67-nsq4f     3/3     Running   0          97s   172.17.0.9    minikube   <none>           <none>
+demo-pd-0                         1/1     Running   1          95s   172.17.0.6    minikube   <none>           <none>
+demo-tikv-0                       1/1     Running   0          22s   172.17.0.11   minikube   <none>           <none>
+demo-discovery-778c4d87f8-sxblm   1/1     Running   0          2m4s   172.17.0.10   minikube   <none>           <none>
+demo-pd-0                         1/1     Running   1          2m9s   172.17.0.6    minikube   <none>           <none>
+demo-tidb-0                       0/2     Pending   0          0s     <none>        <none>     <none>           <none>
+demo-tidb-0                       0/2     Pending   0          0s     <none>        minikube   <none>           <none>
+demo-tikv-0                       1/1     Running   0          57s    172.17.0.11   minikube   <none>           <none>
+demo-tidb-0                       0/2     ContainerCreating   0          1s     <none>        minikube   <none>           <none>
+demo-tidb-0                       0/2     ContainerCreating   0          3s     <none>        minikube   <none>           <none>
+demo-tidb-0                       1/2     Running             0          16s    172.17.0.12   minikube   <none>           <none>
+
+
+#Port Forwading
+
+kubectl port-forward -n default svc/demo-grafana --address 0.0.0.0  3000:3000
+
+Examples:
+
+Listen on port 127.0.0.1:8888 locally, forwarding to 127.0.0.1:5000 in the pod
+
+kubectl port-forward pod/mypod 8888:5000
+Listen on port 127.0.0.1:8888 locally, forwarding to 1.1.1.1:5000 in the pod
+
+kubectl port-forward pod/mypod 8888:1.1.1.1:5000
+Listen on port 8888 on all addresses locally, forwarding to 2.2.2.2:5000 in the pod
+
+kubectl port-forward --address 0.0.0.0 pod/mypod 8888:2.2.2.2:5000
