@@ -38,3 +38,20 @@ Please note: by default, Tiller is deployed with an insecure 'allow unauthentica
 To prevent this, run `helm init` with the --tiller-tls-verify flag.
 For more information on securing your installation see: https://v2.helm.sh/docs/securing_installation/
 [kogentix_ops@cdhdn25 ~]$
+[kogentix_ops@cdhdn25 ~]$ helm version
+Client: &version.Version{SemVer:"v2.17.0", GitCommit:"a690bad98af45b015bd3da1a41f6218b1a451dbe", GitTreeState:"clean"}
+Server: &version.Version{SemVer:"v2.17.0", GitCommit:"a690bad98af45b015bd3da1a41f6218b1a451dbe", GitTreeState:"clean"}
+[kogentix_ops@cdhdn25 ~]$ kubectl --help |less
+[kogentix_ops@cdhdn25 ~]$ kubectl -n kube-system get pod
+NAME                               READY   STATUS    RESTARTS   AGE
+coredns-558bd4d5db-f4kfk           1/1     Running   2          2d20h
+etcd-minikube                      1/1     Running   2          2d20h
+kube-apiserver-minikube            1/1     Running   2          2d20h
+kube-controller-manager-minikube   1/1     Running   2          2d20h
+kube-proxy-qvnk2                   1/1     Running   2          2d20h
+kube-scheduler-minikube            1/1     Running   2          2d20h
+storage-provisioner                1/1     Running   5          2d20h
+tiller-deploy-7b9cbd46c9-9kkwj     1/1     Running   0          2m48s
+[kogentix_ops@cdhdn25 ~]$ kubectl get pod
+No resources found in default namespace.
+[kogentix_ops@cdhdn25 ~]$
