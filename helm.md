@@ -55,3 +55,11 @@ tiller-deploy-7b9cbd46c9-9kkwj     1/1     Running   0          2m48s
 [kogentix_ops@cdhdn25 ~]$ kubectl get pod
 No resources found in default namespace.
 [kogentix_ops@cdhdn25 ~]$
+[kogentix_ops@cdhdn25 ~]$ helm repo add pingcap https://charts.pingcap.org/
+"pingcap" has been added to your repositories
+[kogentix_ops@cdhdn25 ~]$ helm repo list
+NAME    URL
+stable  https://charts.helm.sh/stable
+local   http://127.0.0.1:8879/charts
+pingcap https://charts.pingcap.org/
+[kogentix_ops@cdhdn25 ~]$
