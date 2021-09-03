@@ -63,3 +63,65 @@ stable  https://charts.helm.sh/stable
 local   http://127.0.0.1:8879/charts
 pingcap https://charts.pingcap.org/
 [kogentix_ops@cdhdn25 ~]$
+
+[kogentix_ops@cdhdn25 ~]$ helm repo update
+Hang tight while we grab the latest from your chart repositories...
+...Skip local chart repository
+...Successfully got an update from the "pingcap" chart repository
+...Successfully got an update from the "stable" chart repository
+Update Complete.
+[kogentix_ops@cdhdn25 ~]$ helm search tidb-cluster -l
+NAME                    CHART VERSION   APP VERSION     DESCRIPTION
+pingcap/tidb-cluster    v1.2.2                          A Helm chart for TiDB Cluster
+pingcap/tidb-cluster    v1.2.1                          A Helm chart for TiDB Cluster
+pingcap/tidb-cluster    v1.2.0                          A Helm chart for TiDB Cluster
+pingcap/tidb-cluster    v1.1.13                         A Helm chart for TiDB Cluster
+pingcap/tidb-cluster    v1.1.12                         A Helm chart for TiDB Cluster
+pingcap/tidb-cluster    v1.1.11                         A Helm chart for TiDB Cluster
+pingcap/tidb-cluster    v1.1.10                         A Helm chart for TiDB Cluster
+pingcap/tidb-cluster    v1.1.9                          A Helm chart for TiDB Cluster
+pingcap/tidb-cluster    v1.1.8                          A Helm chart for TiDB Cluster
+pingcap/tidb-cluster    v1.1.7                          A Helm chart for TiDB Cluster
+pingcap/tidb-cluster    v1.1.6                          A Helm chart for TiDB Cluster
+pingcap/tidb-cluster    v1.1.5                          A Helm chart for TiDB Cluster
+pingcap/tidb-cluster    v1.1.4                          A Helm chart for TiDB Cluster
+pingcap/tidb-cluster    v1.1.3                          A Helm chart for TiDB Cluster
+pingcap/tidb-cluster    v1.1.2                          A Helm chart for TiDB Cluster
+pingcap/tidb-cluster    v1.1.1                          A Helm chart for TiDB Cluster
+pingcap/tidb-cluster    v1.1.0                          A Helm chart for TiDB Cluster
+pingcap/tidb-cluster    v1.0.7                          A Helm chart for TiDB Cluster
+pingcap/tidb-cluster    v1.0.6                          A Helm chart for TiDB Cluster
+pingcap/tidb-cluster    v1.0.5                          A Helm chart for TiDB Cluster
+pingcap/tidb-cluster    v1.0.4                          A Helm chart for TiDB Cluster
+pingcap/tidb-cluster    v1.0.3                          A Helm chart for TiDB Cluster
+pingcap/tidb-cluster    v1.0.2                          A Helm chart for TiDB Cluster
+pingcap/tidb-cluster    v1.0.1                          A Helm chart for TiDB Cluster
+pingcap/tidb-cluster    v1.0.0                          A Helm chart for TiDB Cluster
+[kogentix_ops@cdhdn25 ~]$ helm search tidb-operator -l
+NAME                    CHART VERSION   APP VERSION     DESCRIPTION
+pingcap/tidb-operator   v1.2.2          v1.2.2          tidb-operator Helm chart for Kubernetes
+pingcap/tidb-operator   v1.2.1          v1.2.1          tidb-operator Helm chart for Kubernetes
+pingcap/tidb-operator   v1.2.0          v1.2.0          tidb-operator Helm chart for Kubernetes
+pingcap/tidb-operator   v1.1.13         v1.1.13         tidb-operator Helm chart for Kubernetes
+pingcap/tidb-operator   v1.1.12         v1.1.12         tidb-operator Helm chart for Kubernetes
+pingcap/tidb-operator   v1.1.11         v1.1.11         tidb-operator Helm chart for Kubernetes
+pingcap/tidb-operator   v1.1.10         v1.1.10         tidb-operator Helm chart for Kubernetes
+pingcap/tidb-operator   v1.1.9          v1.1.9          tidb-operator Helm chart for Kubernetes
+pingcap/tidb-operator   v1.1.8          v1.1.8          tidb-operator Helm chart for Kubernetes
+pingcap/tidb-operator   v1.1.7          v1.1.7          tidb-operator Helm chart for Kubernetes
+pingcap/tidb-operator   v1.1.6          v1.1.6          tidb-operator Helm chart for Kubernetes
+pingcap/tidb-operator   v1.1.5          v1.1.5          tidb-operator Helm chart for Kubernetes
+pingcap/tidb-operator   v1.1.4          v1.1.4          tidb-operator Helm chart for Kubernetes
+pingcap/tidb-operator   v1.1.3                          tidb-operator Helm chart for Kubernetes
+pingcap/tidb-operator   v1.1.2                          tidb-operator Helm chart for Kubernetes
+pingcap/tidb-operator   v1.1.1                          tidb-operator Helm chart for Kubernetes
+pingcap/tidb-operator   v1.1.0                          tidb-operator Helm chart for Kubernetes
+pingcap/tidb-operator   v1.0.7                          tidb-operator Helm chart for Kubernetes
+pingcap/tidb-operator   v1.0.6                          tidb-operator Helm chart for Kubernetes
+pingcap/tidb-operator   v1.0.5                          tidb-operator Helm chart for Kubernetes
+pingcap/tidb-operator   v1.0.4                          tidb-operator Helm chart for Kubernetes
+pingcap/tidb-operator   v1.0.3                          tidb-operator Helm chart for Kubernetes
+pingcap/tidb-operator   v1.0.2                          tidb-operator Helm chart for Kubernetes
+pingcap/tidb-operator   v1.0.1                          tidb-operator Helm chart for Kubernetes
+pingcap/tidb-operator   v1.0.0                          tidb-operator Helm chart for Kubernetes
+[kogentix_ops@cdhdn25 ~]$
